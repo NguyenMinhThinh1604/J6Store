@@ -1,0 +1,40 @@
+<div xmlns:th="www.thymeleaf.org">
+<!--  
+	<nav class="navbar navbar-inverse" style="font-variant: small-caps;">
+		<div class="container-fluid">
+			<ul class="nav navbar-nav">
+				<li><a th:href="@{/}">Home</a></li>
+				<li><a th:href="@{/security/login/form}">Sign In</a></li>
+				<li><a th:href="@{/security/logoff}">Sign Out</a></li>
+				<li><a th:href="@{/order/list}">Your Oders</a></li>
+				<li><a th:href="@{/admin/home/index}">Administration</a></li>
+			</ul>
+			<ul class="nav navbar-nav navbar-right">
+				<li><a href="#">Welcome you</a></li>
+			</ul>
+		</div>
+	</nav>
+	-->
+	 <nav class="navbar navbar-inverse" style="font-variant: small-caps;">
+		<div class="container-fluid">
+			<ul class="nav navbar-nav">
+				<li><a th:href="@{/}">Home</a></li>
+				<th:block th:if="${#request.remoteUser}">
+					<li><a th:href="@{/security/logoff}">Sign Out</a></li>
+					<li><a th:href="@{/order/list}">Your Oders</a></li>
+					<li th:if="${#request.isUserInRole('DIRE') or #request.isUserInRole('STAF')}">
+						<a th:href="@{/admin/home/index}">Administration</a>
+					</li>
+				</th:block>
+				<th:block th:unless="${#request.remoteUser}">
+					<li><a th:href="@{/security/login/form}">Sign In</a></li>
+				</th:block>
+				
+				
+			</ul>
+			<ul th:if="${#request.remoteUser}" class="nav navbar-nav navbar-right">
+				<li><a href="#">Welcome [[${#request.remoteUser}]]</a></li>
+			</ul>
+		</div>
+	</nav>
+</div>
